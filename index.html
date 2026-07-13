@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IGOR OLIVEIRA — EDITOR DE VÍDEO</title>
+<meta name="description" content="Igor Oliveira — Editor de vídeo mobile e PC. Gameplay, marketing digital, conteúdo para YouTube, Shorts e TikTok.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f0eee4;
+    --ink:#0a0a0a;
+    --accent:#ffe600;
+    --accent-2:#ff3d1f;
+    --line:#0a0a0a;
+    --panel:#ffffff;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Space Grotesk',sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .display{
+    font-family:'Archivo Black',sans-serif;
+    text-transform:uppercase;
+    line-height:.92;
+    letter-spacing:-.01em;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--ink);color:var(--accent);}
+  a:focus-visible, button:focus-visible{outline:3px solid var(--accent-2);outline-offset:2px;}
+
+  .wrap{max-width:1200px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- hard shadow utility ---------- */
+  .hard{
+    border:3px solid var(--ink);
+    box-shadow:7px 7px 0 var(--ink);
+  }
+  .hard-sm{
+    border:2px solid var(--ink);
+    box-shadow:4px 4px 0 var(--ink);
+  }
+
+  /* ---------- marquee banner ---------- */
+  .top-banner{
+    background:var(--ink);color:var(--paper);
+    border-bottom:3px solid var(--ink);
+    overflow:hidden;padding:8px 0;
+  }
+  .marquee{display:flex;width:max-content;animation:scroll 20s linear infinite;}
+  .marquee span{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    text-transform:uppercase;letter-spacing:.08em;padding:0 22px;white-space:nowrap;
+  }
+  .marquee span.y{color:var(--accent);}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+  /* ---------- nav ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:var(--paper);
+    border-bottom:3px solid var(--ink);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;max-width:1200px;margin:0 auto;}
+  .logo{font-family:'Archivo Black',sans-serif;font-size:20px;text-transform:uppercase;}
+  .logo span{background:var(--accent);padding:0 4px;}
+  .nav-links{display:flex;gap:22px;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-transform:uppercase;}
+  .nav-links a{border-bottom:2px solid transparent;}
+  .nav-links a:hover{border-color:var(--ink);}
+  .nav-cta{
+    font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;text-transform:uppercase;
+    background:var(--ink);color:var(--paper);padding:9px 16px;
+    border:2px solid var(--ink);
+  }
+  .nav-cta:hover{background:var(--accent);color:var(--ink);}
+  @media (max-width:760px){ .nav-links{display:none;} }
+
+  /* ---------- hero ---------- */
+  .hero{padding:70px 0 60px;}
+  .hero-tag{
+    display:inline-block;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;
+    text-transform:uppercase;background:var(--accent);border:2px solid var(--ink);
+    padding:6px 14px;margin-bottom:26px;
+  }
+  .hero h1{
+    font-size:clamp(52px,12vw,140px);
+  }
+  .hero h1 .stroke{
+    -webkit-text-stroke:2px var(--ink);
+    color:var(--paper);
+  }
+  .hero-grid{
+    margin-top:40px;
+    display:grid;grid-template-columns:1.4fr 1fr;gap:24px;
+    align-items:start;
+  }
+  .hero-desc{font-size:18px;line-height:1.6;font-weight:500;}
+  .hero-actions{margin-top:26px;display:flex;flex-wrap:wrap;gap:14px;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:14px 22px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+    text-transform:uppercase;border:3px solid var(--ink);
+    transition:transform .15s ease, box-shadow .15s ease;
+    background:var(--paper);
+  }
+  .btn-primary{background:var(--ink);color:var(--paper);box-shadow:5px 5px 0 var(--accent-2);}
+  .btn-primary:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--accent-2);}
+  .btn-ghost{box-shadow:5px 5px 0 var(--ink);}
+  .btn-ghost:hover{transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink);}
+
+  .hero-box{
+    background:var(--panel);padding:24px;
+  }
+  .hero-box .k{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;color:#555;margin-bottom:4px;}
+  .hero-box .v{font-family:'Archivo Black',sans-serif;font-size:26px;text-transform:uppercase;margin-bottom:18px;}
+  .hero-box .v:last-child{margin-bottom:0;}
+
+  @media (max-width:860px){ .hero-grid{grid-template-columns:1fr;} }
+
+  /* ---------- sections ---------- */
+  section{padding:80px 0;border-bottom:3px solid var(--ink);}
+  section:last-of-type{border-bottom:0;}
+  .sec-num{
+    font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;
+    background:var(--ink);color:var(--paper);display:inline-block;padding:4px 10px;margin-bottom:16px;
+  }
+  .sec-head h2{font-size:clamp(32px,6vw,58px);margin-bottom:14px;}
+  .sec-head p{font-size:16px;max-width:600px;font-weight:500;line-height:1.6;}
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:30px;margin-top:40px;align-items:start;}
+  .about-grid p{font-size:16.5px;line-height:1.75;font-weight:500;margin-bottom:16px;}
+  .about-grid strong{background:var(--accent);padding:0 4px;}
+  .stat{background:var(--panel);padding:20px;margin-bottom:16px;}
+  .stat .num{font-family:'Archivo Black',sans-serif;font-size:36px;}
+  .stat .lbl{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;margin-top:4px;color:#555;}
+  @media (max-width:860px){ .about-grid{grid-template-columns:1fr;} }
+
+  /* ---------- tools ---------- */
+  .tools-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px;}
+  .tool-card{background:var(--panel);padding:22px 16px;text-align:center;}
+  .tool-card .tag{font-family:'JetBrains Mono',monospace;font-size:10px;text-transform:uppercase;color:#555;margin-bottom:6px;}
+  .tool-card .name{font-family:'Archivo Black',sans-serif;font-size:14px;text-transform:uppercase;}
+  @media (max-width:760px){ .tools-grid{grid-template-columns:repeat(2,1fr);} }
+
+  /* ---------- reel ---------- */
+  .reel-grid{margin-top:40px;display:flex;flex-direction:column;gap:22px;}
+  .feature-video{
+    position:relative;background:var(--panel);aspect-ratio:16/9;overflow:hidden;cursor:pointer;
+  }
+  .feature-video img, .feature-video iframe{width:100%;height:100%;object-fit:cover;display:block;border:0;}
+  .video-tag{
+    position:absolute;top:0;left:0;
+    background:var(--accent);border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;
+    padding:8px 14px;
+  }
+  .video-title-bar{
+    position:absolute;bottom:0;left:0;right:0;
+    background:var(--ink);color:var(--paper);
+    padding:14px 18px;display:flex;justify-content:space-between;align-items:center;gap:12px;
+  }
+  .video-title-bar h3{font-family:'Archivo Black',sans-serif;font-size:16px;text-transform:uppercase;}
+  .play-btn{
+    width:52px;height:52px;flex-shrink:0;
+    background:var(--accent);border:2px solid var(--paper);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .play-btn svg{width:18px;height:18px;margin-left:2px;}
+
+  .shorts-row{
+    display:grid;grid-template-columns:repeat(5,1fr);gap:16px;
+  }
+  .short-card{
+    position:relative;background:var(--panel);aspect-ratio:9/16;overflow:hidden;cursor:pointer;
+  }
+  .short-card img, .short-card iframe{width:100%;height:100%;object-fit:cover;display:block;border:0;}
+  .short-tag{
+    position:absolute;top:0;left:0;background:var(--accent);
+    border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);
+    font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;text-transform:uppercase;padding:5px 8px;
+  }
+  .short-title-bar{
+    position:absolute;bottom:0;left:0;right:0;background:var(--ink);color:var(--paper);padding:10px;
+  }
+  .short-title-bar h4{font-family:'Archivo Black',sans-serif;font-size:11px;text-transform:uppercase;line-height:1.3;}
+  .short-card .play-btn{
+    position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:38px;height:38px;
+  }
+  .short-card .play-btn svg{width:13px;height:13px;}
+
+  @media (max-width:980px){ .shorts-row{grid-template-columns:repeat(3,1fr);} }
+  @media (max-width:620px){ .shorts-row{grid-template-columns:repeat(2,1fr);} }
+
+  .more-soon{
+    margin-top:24px;text-align:center;font-family:'JetBrains Mono',monospace;
+    font-size:12px;font-weight:700;text-transform:uppercase;color:#555;
+  }
+
+  /* ---------- services ---------- */
+  .services-grid{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .service-card{background:var(--panel);padding:28px;}
+  .service-card .idx{font-family:'Archivo Black',sans-serif;font-size:34px;color:var(--accent-2);-webkit-text-stroke:1.5px var(--ink);margin-bottom:14px;}
+  .service-card h3{font-family:'Archivo Black',sans-serif;font-size:18px;text-transform:uppercase;margin-bottom:10px;}
+  .service-card p{font-size:14px;font-weight:500;line-height:1.6;}
+  @media (max-width:860px){ .services-grid{grid-template-columns:1fr;} }
+
+  /* ---------- contact ---------- */
+  .contact-box{
+    margin-top:40px;background:var(--ink);color:var(--paper);
+    padding:60px 40px;text-align:center;
+  }
+  .contact-box h2{font-size:clamp(32px,6vw,58px);margin-bottom:16px;}
+  .contact-box h2 .hl{background:var(--accent);color:var(--ink);padding:0 8px;}
+  .contact-box p{font-size:15px;max-width:460px;margin:0 auto 30px;color:#ccc;font-weight:500;}
+  .contact-actions{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;}
+  .contact-box .btn-primary{background:var(--accent);color:var(--ink);box-shadow:5px 5px 0 var(--paper);}
+  .contact-box .btn-primary:hover{box-shadow:7px 7px 0 var(--paper);}
+  .contact-box .btn-ghost{background:var(--ink);color:var(--paper);border-color:var(--paper);box-shadow:5px 5px 0 var(--paper);}
+  .contact-box .btn-ghost:hover{box-shadow:7px 7px 0 var(--paper);}
+  @media (max-width:600px){ .contact-box{padding:44px 22px;} }
+
+  footer{padding:28px 0;}
+  .footer-row{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;text-transform:uppercase;
+  }
+  .footer-row a:hover{background:var(--accent);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-banner" aria-hidden="true">
+  <div class="marquee" id="topMarquee"></div>
+</div>
+
+<header>
+  <nav class="nav">
+    <div class="logo">IGOR<span>EDIT</span></div>
+    <div class="nav-links">
+      <a href="#reel">REEL</a>
+      <a href="#sobre">SOBRE</a>
+      <a href="#servicos">SERVIÇOS</a>
+      <a href="#contato">CONTATO</a>
+    </div>
+    <a class="nav-cta" id="navWhats" href="#" target="_blank" rel="noopener">FALAR AGORA</a>
+  </nav>
+</header>
+
+<main class="wrap">
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero" style="border-bottom:3px solid var(--ink);">
+    <span class="hero-tag">EDITOR DE VÍDEO · MOBILE &amp; PC</span>
+    <h1 class="display">IGOR<br><span class="stroke">OLIVEIRA</span></h1>
+
+    <div class="hero-grid">
+      <div>
+        <p class="hero-desc">Transformo bruto em conteúdo que prende, converte e viraliza. Edição para YouTube, Shorts e TikTok — do gameplay ao comercial de produto.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" id="heroWhats" href="#" target="_blank" rel="noopener">FECHAR PROJETO →</a>
+          <a class="btn btn-ghost" href="#reel">VER O REEL ↓</a>
+        </div>
+      </div>
+      <div class="hero-box hard">
+        <div class="k">EXPERIÊNCIA</div>
+        <div class="v">1 ANO</div>
+        <div class="k">PLATAFORMAS</div>
+        <div class="v">MOBILE + PC</div>
+        <div class="k">FOCO</div>
+        <div class="v">GAMEPLAY / MKT</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SOBRE ===================== -->
+  <section id="sobre">
+    <div class="sec-head reveal">
+      <span class="sec-num mono">01 — SOBRE</span>
+      <h2 class="display">QUEM EDITA</h2>
+    </div>
+    <div class="about-grid reveal">
+      <div>
+        <p>Comecei a editar ainda <strong>criança</strong>, cortando vídeo pro meu próprio canal de games no YouTube — só porque gostava. Nunca parei.</p>
+        <p>Há <strong>1 ano</strong> edito profissionalmente: mobile (CapCut, AlightMotion, KineMaster) e <strong>Premiere Pro</strong> no PC, entregando conteúdo pra YouTube, Shorts e TikTok.</p>
+        <p>Transito bem entre <strong>gameplay/eSports</strong> e <strong>marketing digital</strong> — de vídeo de recrutamento eSports a comercial de conversão. Meta: entregar resultado, ser reconhecido pelo trabalho, e um dia editar pro mercado internacional.</p>
+      </div>
+      <div>
+        <div class="stat hard-sm"><div class="num">21</div><div class="lbl">ANOS DE IDADE</div></div>
+        <div class="stat hard-sm"><div class="num">1 ANO</div><div class="lbl">EDITANDO PROFISSIONALMENTE</div></div>
+        <div class="stat hard-sm"><div class="num">2X</div><div class="lbl">MOBILE E PC</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FERRAMENTAS ===================== -->
+  <section>
+    <div class="sec-head reveal">
+      <span class="sec-num mono">02 — SETUP</span>
+      <h2 class="display">FERRAMENTAS</h2>
+    </div>
+    <div class="tools-grid reveal">
+      <div class="tool-card hard-sm"><div class="tag">MOBILE</div><div class="name">CAPCUT</div></div>
+      <div class="tool-card hard-sm"><div class="tag">MOBILE</div><div class="name">ALIGHTMOTION</div></div>
+      <div class="tool-card hard-sm"><div class="tag">MOBILE</div><div class="name">KINEMASTER</div></div>
+      <div class="tool-card hard-sm"><div class="tag">PC</div><div class="name">PREMIERE PRO</div></div>
+    </div>
+  </section>
+
+  <!-- ===================== REEL ===================== -->
+  <section id="reel">
+    <div class="sec-head reveal">
+      <span class="sec-num mono">03 — PORTFÓLIO</span>
+      <h2 class="display">O REEL</h2>
+      <p>Trabalhos recentes — de vídeo de conversão a gameplay editado pra prender do primeiro segundo.</p>
+    </div>
+    <div class="reel-grid reveal">
+      <div id="featuredVideos"></div>
+      <div id="shortsGrid" class="shorts-row"></div>
+    </div>
+    <p class="more-soon">+ NOVOS VÍDEOS SENDO ADICIONADOS EM BREVE</p>
+  </section>
+
+  <!-- ===================== SERVIÇOS ===================== -->
+  <section id="servicos">
+    <div class="sec-head reveal">
+      <span class="sec-num mono">04 — SERVIÇOS</span>
+      <h2 class="display">O QUE EU FAÇO</h2>
+    </div>
+    <div class="services-grid reveal">
+      <div class="service-card hard-sm">
+        <div class="idx">01</div>
+        <h3>EDIÇÃO DE GAMEPLAY</h3>
+        <p>Cortes dinâmicos, ritmo de jogo, destaques e narrativa pra conteúdo de Free Fire e eSports que prende a audiência.</p>
+      </div>
+      <div class="service-card hard-sm">
+        <div class="idx">02</div>
+        <h3>VÍDEOS DE MARKETING</h3>
+        <p>Vídeos promocionais, comerciais de produto e cases de venda focados em conversão.</p>
+      </div>
+      <div class="service-card hard-sm">
+        <div class="idx">03</div>
+        <h3>SHORTS &amp; TIKTOK</h3>
+        <p>Formato vertical pensado pro algoritmo: gancho forte, legendas e ritmo de retenção.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO ===================== -->
+  <section id="contato" style="border-bottom:0;">
+    <div class="contact-box reveal">
+      <h2 class="display">VAMOS CRIAR<br><span class="hl">ALGO INCRÍVEL</span></h2>
+      <p>Tem um vídeo, um canal ou uma marca? Me chama e vamos transformar isso em conteúdo que entrega resultado.</p>
+      <div class="contact-actions">
+        <a class="btn btn-primary" id="contactWhats" href="#" target="_blank" rel="noopener">WHATSAPP →</a>
+        <a class="btn btn-ghost" href="https://www.instagram.com/igoykz?igsh=dzQ3c3g4emdpMm8w" target="_blank" rel="noopener">INSTAGRAM @IGOYKZ</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <div class="footer-row">
+    <span>© 2026 IGOR OLIVEIRA</span>
+    <span><a href="#contato">DISPONÍVEL PARA PROJETOS</a></span>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   CONFIG — pra adicionar/trocar vídeos, edite só este array.
+   ========================================================= */
+const VIDEOS = [
+  { id:"Nzkw8LsW6fE", tag:"Conversão", title:"Divulgação de curso digital", featured:true },
+  { id:"2ET8eUQHKck", tag:"Case de sucesso", title:"Estratégia de vendas digitais", featured:true },
+  { id:"JtMLNr9nXvw", tag:"Gameplay · eSports", title:"Recrutamento eSports" },
+  { id:"aGQXj1SNsC0", tag:"Free Fire", title:"Quanto vale a conta?" },
+  { id:"i6lc02rBn50", tag:"Comercial fictício", title:"Lançamento de notebook" },
+  { id:"0OCD-emAwbk", tag:"Promocional", title:"E-book de crochê" },
+  { id:"qhD5tCp3PoE", tag:"Comercial de produto", title:"Estética e nail design" },
+];
+
+const WHATS_NUMBER = "5585989364928";
+const WHATS_MSG = encodeURIComponent("Olá Igor! Vi seu portfólio de edição de vídeos e quero falar sobre um projeto.");
+const WHATS_LINK = `https://wa.me/${WHATS_NUMBER}?text=${WHATS_MSG}`;
+["navWhats","heroWhats","contactWhats"].forEach(id=>{
+  const el = document.getElementById(id);
+  if(el) el.href = WHATS_LINK;
+});
+
+function buildPlayIcon(){
+  return `<svg viewBox="0 0 24 24" fill="var(--ink)"><path d="M8 5v14l11-7z"/></svg>`;
+}
+
+/* ---------- featured (horizontal) ---------- */
+const featuredWrap = document.getElementById("featuredVideos");
+VIDEOS.filter(v=>v.featured).forEach(v=>{
+  const card = document.createElement("div");
+  card.className = "feature-video hard";
+  card.style.marginBottom = "22px";
+  card.innerHTML = `
+    <img loading="lazy" src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}">
+    <div class="video-tag mono">${v.tag}</div>
+    <div class="video-title-bar">
+      <h3>${v.title}</h3>
+      <div class="play-btn">${buildPlayIcon()}</div>
+    </div>
+  `;
+  card.addEventListener("click", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1`;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    card.innerHTML = "";
+    card.appendChild(iframe);
+  }, { once:true });
+  featuredWrap.appendChild(card);
+});
+
+/* ---------- shorts (vertical) ---------- */
+const shortsWrap = document.getElementById("shortsGrid");
+VIDEOS.filter(v=>!v.featured).forEach(v=>{
+  const card = document.createElement("div");
+  card.className = "short-card hard-sm";
+  card.innerHTML = `
+    <img loading="lazy" src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}">
+    <div class="short-tag mono">${v.tag}</div>
+    <div class="short-title-bar"><h4>${v.title}</h4></div>
+    <div class="play-btn">${buildPlayIcon()}</div>
+  `;
+  card.addEventListener("click", () => {
+    const iframe = document.createElement("iframe");
+    iframe.src = `https://www.youtube.com/embed/${v.id}?autoplay=1`;
+    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+    iframe.allowFullscreen = true;
+    card.innerHTML = "";
+    card.appendChild(iframe);
+  }, { once:true });
+  shortsWrap.appendChild(card);
+});
+
+/* ---------- top marquee ---------- */
+const items = ["EDIÇÃO MOBILE","EDIÇÃO PC","GAMEPLAY","MARKETING DIGITAL","YOUTUBE","SHORTS","TIKTOK","DISPONÍVEL PARA PROJETOS"];
+const topMarquee = document.getElementById("topMarquee");
+const html = items.map((t,i)=>`<span class="${i%2===0?'y':''}">${t} ★</span>`).join("");
+topMarquee.innerHTML = html + html;
+
+/* ---------- scroll reveal ---------- */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      entry.target.classList.add("in");
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold:0.12 });
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+</script>
+
+</body>
+</html>
